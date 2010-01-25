@@ -1,0 +1,112 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }  
+         
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>Print Gmail Calendar.sikuli</h2> <a href="Print Gmail Calendar.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="cmt"># Copyright 2010, Mark Kendrat
+</span><span class="cmt"># Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
+</span>
+FileButton =<img src="1264458174384.png" />
+CloseWindowButton = <img src="1264458128527.png" />
+OkCancelButtons = <img src="1264457738647.png" />
+OkButton = <img src="1264457744310.png" />
+SystemStartButton = <img src="1264453432087.png" />
+FirefoxStartButton = <img src="1264453848346.png" />
+BookmarksButton = <img src="1264454047986.png" />
+GmailBookmark = <img src="1264454808693.png" />
+GmailLoadedImage = <img src="1264454851923.png" />
+GmailCalendarButton = <img src="1264454723262.png" />
+GmailPrintButton = <img src="1264455178791.png" />
+BlackAndWhite = <img src="1264455865056.png" />
+PrintSaveAsCancelButtons = <img src="1264456519100.png" />
+CancelButton = <img src="1264456528456.png" />
+PrintButton = <img src="1264455258249.png" />
+GmailMonthButton = <img src="1264455266391.png" />
+CheckBox = <img src="1264455565026.png" />
+<span class="skw">click</span> (SystemStartButton)
+<span class="skw">click</span> (FirefoxStartButton)
+<span class="skw">click</span> (BookmarksButton)
+<span class="skw">click</span> (GmailBookmark)
+<span class="skw">wait</span> (GmailLoadedImage, timeout = <span class="dig">8000</span>)
+<span class="skw">click</span> (GmailCalendarButton)
+<span class="skw">click</span> (GmailMonthButton)
+<span class="skw">click</span> (GmailPrintButton)
+<span class="cmt">#if find (BlackAndWhite):
+</span><span class="cmt">#   popup ("Black and White")
+</span><span class="cmt">#   find.region.inside ().click (CheckBox)
+</span><span class="skw">click</span> (PrintButton)
+<span class="skw">click</span> (OkButton)
+<span class="skw">sleep</span> (<span class="dig">5</span>)
+<span class="skw">click</span> (CancelButton)
+<span class="skw">click</span> (FileButton)
+<span class="skw">click</span> (CloseWindowButton)
+</pre>
+</body>
+</html>
