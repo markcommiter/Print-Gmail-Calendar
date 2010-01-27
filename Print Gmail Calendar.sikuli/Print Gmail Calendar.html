@@ -73,40 +73,64 @@
 <span class="cmt"># Copyright 2010, Mark Kendrat
 </span><span class="cmt"># Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 </span>
-FileButton =<img src="1264458174384.png" />
-CloseWindowButton = <img src="1264458128527.png" />
-OkCancelButtons = <img src="1264457738647.png" />
-OkButton = <img src="1264457744310.png" />
-SystemStartButton = <img src="1264453432087.png" />
-FirefoxStartButton = <img src="1264453848346.png" />
-BookmarksButton = <img src="1264454047986.png" />
-GmailBookmark = <img src="1264454808693.png" />
-GmailLoadedImage = <img src="1264454851923.png" />
-GmailCalendarButton = <img src="1264454723262.png" />
-GmailPrintButton = <img src="1264455178791.png" />
-BlackAndWhite = <img src="1264455865056.png" />
-PrintSaveAsCancelButtons = <img src="1264456519100.png" />
-CancelButton = <img src="1264456528456.png" />
-PrintButton = <img src="1264455258249.png" />
-GmailMonthButton = <img src="1264455266391.png" />
-CheckBox = <img src="1264455565026.png" />
-<span class="skw">click</span> (SystemStartButton)
-<span class="skw">click</span> (FirefoxStartButton)
-<span class="skw">click</span> (BookmarksButton)
-<span class="skw">click</span> (GmailBookmark)
-<span class="skw">wait</span> (GmailLoadedImage, timeout = <span class="dig">8000</span>)
-<span class="skw">click</span> (GmailCalendarButton)
-<span class="skw">click</span> (GmailMonthButton)
-<span class="skw">click</span> (GmailPrintButton)
-<span class="cmt">#if find (BlackAndWhite):
-</span><span class="cmt">#   popup ("Black and White")
-</span><span class="cmt">#   find.region.inside ().click (CheckBox)
-</span><span class="skw">click</span> (PrintButton)
-<span class="skw">click</span> (OkButton)
-<span class="skw">sleep</span> (<span class="dig">5</span>)
-<span class="skw">click</span> (CancelButton)
-<span class="skw">click</span> (FileButton)
-<span class="skw">click</span> (CloseWindowButton)
+NumberOfMonthsToPrint = <span class="dig">3</span>
+
+<span class="kw">class</span> PrintDialog:
+   ReadyImage = <img src="1264569817966.png" />
+   OkButton = <img src="1264569589937.png" />
+<span class="kw">class</span> StartMenu:
+   Button = <img src="1264453432087.png" />
+   FirefoxStartButton = <img src="1264453848346.png" />
+<span class="kw">class</span> Firefox:
+   FileButton =<img src="1264458174384.png" />
+   CloseWindowButton = <img src="1264458128527.png" />
+   UrlBox = <img src="1264568783832.png" />
+   BookmarksButton = <img src="1264454047986.png" />
+   <span class="kw">def</span> Open ():
+<span class="cmt">#      openApp ("firefox")
+</span>      <span class="skw">click</span> (StartMenu.Button)
+      <span class="skw">click</span> (StartMenu.FirefoxStartButton)
+   Open = staticmethod (Open)
+   <span class="kw">def</span> CloseWindow ():
+      <span class="skw">click</span> (Firefox.FileButton)
+      <span class="skw">click</span> (Firefox.CloseWindowButton)
+   CloseWindow = staticmethod (CloseWindow)
+<span class="kw">class</span> Gmail:
+   ReadyImage = <img src="1264454851923.png" />
+   CalendarReadyImage = <img src="1264536171212.png" />
+   CalendarButton = <img src="1264454723262.png" />
+   NextPageButton = <img src="1264570033916.png" />
+   MonthButton = <img src="1264455266391.png" />
+   PrintButton = <img src="1264455178791.png" />
+   PrintDialogBlackAndWhiteButton = <img src="1264568374364.png" />
+   PrintDialogPrintButton = <img src="1264455258249.png" />
+   PrintDialogCancelButton = <img src="1264456528456.png" />
+   <span class="kw">def</span> Open ():
+      Firefox.Open ()
+      <span class="skw">type</span> (Firefox.UrlBox, <span class="str">"gmail.com\n"</span>)
+      <span class="skw">wait</span> (Gmail.ReadyImage, timeout = <span class="dig">8000</span>)
+   Open = staticmethod (Open)
+   <span class="kw">def</span> OpenCalendar ():
+      Firefox.Open ()
+      <span class="skw">type</span> (Firefox.UrlBox, <span class="str">"google.com/calendar\n"</span>)
+      <span class="skw">wait</span> (Gmail.CalendarReadyImage, <span class="dig">8000</span>)
+   OpenCalendar = staticmethod (OpenCalendar)
+   <span class="kw">def</span> GotoCalendar ():
+      <span class="skw">click</span> (Gmail.CalendarButton)
+   GotoCalendar = staticmethod (GotoCalendar)
+
+Gmail.OpenCalendar ()
+<span class="skw">click</span> (Gmail.MonthButton)
+<span class="kw">for</span> I <span class="kw">in</span> range (NumberOfMonthsToPrint):
+   <span class="skw">click</span> (Gmail.PrintButton)
+   <span class="skw">click</span> (Gmail.PrintDialogBlackAndWhiteButton)
+   <span class="skw">click</span> (Gmail.PrintDialogPrintButton)
+   <span class="skw">wait</span> (PrintDialog.ReadyImage, <span class="dig">8000</span>)
+   <span class="skw">click</span> (PrintDialog.OkButton)
+   <span class="skw">sleep</span> (<span class="dig">5</span>)
+   <span class="skw">click</span> (Gmail.PrintDialogCancelButton)
+   <span class="skw">click</span> (Gmail.NextPageButton)
+Firefox.CloseWindow( )
 </pre>
 </body>
 </html>

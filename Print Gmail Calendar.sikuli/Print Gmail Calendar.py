@@ -1,37 +1,61 @@
 # Copyright 2010, Mark Kendrat
 # Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
 
-FileButton ="1264458174384.png"
-CloseWindowButton = "1264458128527.png"
-OkCancelButtons = "1264457738647.png"
-OkButton = "1264457744310.png"
-SystemStartButton = "1264453432087.png"
-FirefoxStartButton = "1264453848346.png"
-BookmarksButton = "1264454047986.png"
-GmailBookmark = "1264454808693.png"
-GmailLoadedImage = "1264454851923.png"
-GmailCalendarButton = "1264454723262.png"
-GmailPrintButton = "1264455178791.png"
-BlackAndWhite = "1264455865056.png"
-PrintSaveAsCancelButtons = "1264456519100.png"
-CancelButton = "1264456528456.png"
-PrintButton = "1264455258249.png"
-GmailMonthButton = "1264455266391.png"
-CheckBox = "1264455565026.png"
-click (SystemStartButton)
-click (FirefoxStartButton)
-click (BookmarksButton)
-click (GmailBookmark)
-wait (GmailLoadedImage, timeout = 8000)
-click (GmailCalendarButton)
-click (GmailMonthButton)
-click (GmailPrintButton)
-#if find (BlackAndWhite):
-#   popup ("Black and White")
-#   find.region.inside ().click (CheckBox)
-click (PrintButton)
-click (OkButton)
-sleep (5)
-click (CancelButton)
-click (FileButton)
-click (CloseWindowButton)
+NumberOfMonthsToPrint = 3
+
+class PrintDialog:
+   ReadyImage = "1264569817966.png"
+   OkButton = "1264569589937.png"
+class StartMenu:
+   Button = "1264453432087.png"
+   FirefoxStartButton = "1264453848346.png"
+class Firefox:
+   FileButton ="1264458174384.png"
+   CloseWindowButton = "1264458128527.png"
+   UrlBox = "1264568783832.png"
+   BookmarksButton = "1264454047986.png"
+   def Open ():
+#      openApp ("firefox")
+      click (StartMenu.Button)
+      click (StartMenu.FirefoxStartButton)
+   Open = staticmethod (Open)
+   def CloseWindow ():
+      click (Firefox.FileButton)
+      click (Firefox.CloseWindowButton)
+   CloseWindow = staticmethod (CloseWindow)
+class Gmail:
+   ReadyImage = "1264454851923.png"
+   CalendarReadyImage = "1264536171212.png"
+   CalendarButton = "1264454723262.png"
+   NextPageButton = "1264570033916.png"
+   MonthButton = "1264455266391.png"
+   PrintButton = "1264455178791.png"
+   PrintDialogBlackAndWhiteButton = "1264568374364.png"
+   PrintDialogPrintButton = "1264455258249.png"
+   PrintDialogCancelButton = "1264456528456.png"
+   def Open ():
+      Firefox.Open ()
+      type (Firefox.UrlBox, "gmail.com\n")
+      wait (Gmail.ReadyImage, timeout = 8000)
+   Open = staticmethod (Open)
+   def OpenCalendar ():
+      Firefox.Open ()
+      type (Firefox.UrlBox, "google.com/calendar\n")
+      wait (Gmail.CalendarReadyImage, 8000)
+   OpenCalendar = staticmethod (OpenCalendar)
+   def GotoCalendar ():
+      click (Gmail.CalendarButton)
+   GotoCalendar = staticmethod (GotoCalendar)
+
+Gmail.OpenCalendar ()
+click (Gmail.MonthButton)
+for I in range (NumberOfMonthsToPrint):
+   click (Gmail.PrintButton)
+   click (Gmail.PrintDialogBlackAndWhiteButton)
+   click (Gmail.PrintDialogPrintButton)
+   wait (PrintDialog.ReadyImage, 8000)
+   click (PrintDialog.OkButton)
+   sleep (5)
+   click (Gmail.PrintDialogCancelButton)
+   click (Gmail.NextPageButton)
+Firefox.CloseWindow( )
